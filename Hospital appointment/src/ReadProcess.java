@@ -48,7 +48,9 @@ public class ReadProcess {
 			testString += token[i] + ",";
 		}
 
-		String[] finalSplit = finalString.split(",");
+		String[] finalSplit = testString.split(",");
+	
+		
 		return finalSplit;
 	}
 

@@ -4,7 +4,7 @@ public class User {
 	protected String password;
 	protected int authority;
 
-	public User(String username, String password, int authority) {
+	public User(int authority,String username, String password) {
 		this.username = username;
 		this.password = password;
 		this.authority = authority;

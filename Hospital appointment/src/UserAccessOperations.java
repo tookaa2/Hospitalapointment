@@ -1,8 +1,8 @@
 
 public class UserAccessOperations {
 	public static void initializeUsers(String[] userList, UserList mainList) {
-		for (int i = 0; i < userList.length; i += 2) {
-			mainList.addUser(new User(userList[i], userList[i + 1], Integer.parseInt(userList[i + 2])));
+		for (int i = 0; i < userList.length; i += 3) {
+			mainList.addUser(new User(Integer.parseInt(userList[i]), userList[i + 1], userList[i + 2]));
 		}
 
 	}

@@ -33,8 +33,9 @@ public class UserList {
 		boolean temp = false;
 		for (int i = 0; i < userlist1.size(); i++) {
 			if (userlist1.get(i).getUsername().equals(username)) {
-				if (userlist1.get(i + 1).getPassword().equals(password)) {
+				if (userlist1.get(i).getPassword().equals(password)) {
 					temp = true;
+					i=userlist1.size();///Break loop!
 				}
 
 			}

@@ -5,9 +5,6 @@ public static void main(String args[]){
 	UserList mainList= new UserList();
 	userList=ReadProcess.readFile();
 	UserAccessOperations.initializeUsers(userList, mainList);
-	for(int i=1;i<userList.length;i+=2){
-		System.out.println(userList[i]);
-	}
 	Main(mainList);
 }
 public static void Main(UserList mainList){
@@ -19,7 +16,10 @@ public static void Main(UserList mainList){
 	String password=input.next();
 	if(mainList.verifyExist(username)){
 		if(mainList.verifyPassword(username, password)){
-			
+			System.out.println("Login Success!");
+		}
+		else{
+			System.out.println("Invalid!");
 		}
 	}
 	
