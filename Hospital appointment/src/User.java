@@ -1,8 +1,8 @@
 
 public class User {
-	protected String username;
-	protected String password;
-	protected int authority;
+	private String username;
+	private String password;
+	private int authority;
 
 	public User(int authority,String username, String password) {
 		this.username = username;
@@ -11,15 +11,15 @@ public class User {
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public int getAuthority() {
-		return authority;
+		return this.authority;
 	}
 
 }
