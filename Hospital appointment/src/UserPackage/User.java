@@ -1,5 +1,8 @@
+package UserPackage;
 
-public class User {
+import AppointmentData.AppointmentList;
+
+public class User implements ILookUpAppointment{
 	protected final String username;
 	protected String password;
 	protected String authority;
@@ -17,6 +20,10 @@ public class User {
 		this.phoneNumber=phone;
 		this.ID=ID;
 	}
+	
+	public void lookUpAppointment(AppointmentList list1,UserList userListData){
+		System.out.println("User cannot lookup");
+	};
 
 	public String getUsername() {
 		return username;

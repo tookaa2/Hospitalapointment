@@ -1,3 +1,4 @@
+package UserPackage;
 import java.lang.*;
 public class UserAccessOperations {
 	public static void initializeUsers(String[] userList, UserList mainList) {

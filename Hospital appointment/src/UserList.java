@@ -7,12 +7,15 @@ public class UserList {
 	}
 
 	public void addUser(User userObject) {
-		if (userObject.authority == 1) {
-			userlist1.add(new Doctor(userObject.authority, userObject.username, userObject.password));
-		} else if (userObject.authority == 2) {
-			userlist1.add(new Reception(userObject.authority, userObject.username, userObject.password));
+		if (userObject.authority.equals("D")) {
+			userlist1.add(new Doctor(userObject.authority, userObject.ID, userObject.firstName, userObject.lastName,
+					userObject.phoneNumber, userObject.username, userObject.password));
+		} else if (userObject.authority.equals("R")) {
+			userlist1.add(new Reception(userObject.authority, userObject.ID, userObject.firstName, userObject.lastName,
+					userObject.phoneNumber, userObject.username, userObject.password));
 		} else {
-			userlist1.add(new Patient(userObject.authority, userObject.username, userObject.password));
+			userlist1.add(new Patient(userObject.authority, userObject.ID, userObject.firstName, userObject.lastName,
+					userObject.phoneNumber, userObject.username, userObject.password));
 		}
 
 	}
@@ -20,6 +23,7 @@ public class UserList {
 	public boolean verifyExist(String username) {
 		boolean temp = false;
 		for (int i = 0; i < userlist1.size(); i++) {
+
 			if (userlist1.get(i).username.equals(username)) {
 				temp = true;
 
@@ -35,7 +39,7 @@ public class UserList {
 			if (userlist1.get(i).getUsername().equals(username)) {
 				if (userlist1.get(i).getPassword().equals(password)) {
 					temp = true;
-					i=userlist1.size();///Break loop!
+					i = userlist1.size();/// Break loop!
 				}
 
 			}
@@ -43,5 +47,19 @@ public class UserList {
 		}
 		return temp;
 	}
+
+	public User getUserObject(String username) {
+		User temp = null;
+		for (int i = 0; i < userlist1.size(); i++) {
+			if (userlist1.get(i).getUsername().equals(username)) {
+				temp = new User(userlist1.get(i).getAuthority(), userlist1.get(i).getID(),
+						userlist1.get(i).getFirstName(), userlist1.get(i).getLastName(),
+						userlist1.get(i).getPhoneNumber(), userlist1.get(i).getUsername(), "0");
+				break;
+			}
+		}
+		return temp;
+	}
+	
 
 }
