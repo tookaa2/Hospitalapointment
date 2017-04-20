@@ -59,4 +59,21 @@ public class Input {
 
 		return tempNum;
 	}
+	public char LimitInput() {
+		char temp = 0;
+		String in = ""; 
+		boolean done = false; 
+		do { 
+			System.out.println("Input more than 1 digit not a number >>> "); 
+		in = input.nextLine(); 
+		if (in.matches( "^\\D{1}$")) { 
+			temp = in.charAt(0);
+		done = true; 
+		} else { 
+		System.out.println("Error: invalid value was entered."); 
+		} 
+		} while(!done); 
+		
+		return temp;
+	}
 }
