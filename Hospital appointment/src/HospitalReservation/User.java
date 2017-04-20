@@ -1,4 +1,6 @@
-package UserPackage;
+package HospitalReservation;
+
+import java.util.ArrayList;
 
 import AppointmentData.AppointmentList;
 
@@ -23,7 +25,7 @@ public class User implements ILookUpAppointment {
 
 	}
 
-	public void lookUpAppointment(AppointmentList list1, UserList userListData) {
+	public void lookUpAppointment(AppointmentList list1, ArrayList<User> userListData) {
 		System.out.println("User cannot lookup");
 	};
 

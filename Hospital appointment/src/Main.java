@@ -36,9 +36,8 @@ public class Main {
 		if (mainList.verifyExist(username)) {
 			if (mainList.verifyPassword(username, password)) {
 				System.out.println("Login Success!");
-				temporaryUser=mainList.getUserObject(username);
-				
-				
+				temporaryUser = mainList.getUserObject(username);
+
 				menu2(mainList, appointData, temporaryUser);
 			} else {
 				System.out.println("Invalid! Program terminating. . .");
@@ -48,7 +47,7 @@ public class Main {
 	}
 
 	public static void menu2(UserList mainList, AppointmentList appointData, User currentUser) {
-		System.out.println("Welcome " +currentUser.getUserType()+ currentUser.getFirstName());
+		System.out.println("Welcome " + currentUser.getUserType() + currentUser.getFirstName());
 		System.out.println("Please select what you want to do:");
 	}
 }
