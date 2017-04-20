@@ -3,10 +3,10 @@ package HospitalReservation;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import UserPackage.UserList;
-import UserPackage.WriteProcess;
+import Module.Display;
 
 public class DatabaseOperationAppointmentList {
+	
 	public static void addAppointment(ArrayList<Appointment> AppointmentList, Appointment inputAppointment) {
 		AppointmentList.add(inputAppointment);
 	}
@@ -14,7 +14,7 @@ public class DatabaseOperationAppointmentList {
 	public static void deleteAppointment(ArrayList<Appointment> AppointmentList, int index) {
 		AppointmentList.remove(index);
 	}
-
+	///Add appointments to Appointment Arraylist from the input String[], this is for when program starts
 	public static void initializeAppointments(String[] appointmentStringArray, ArrayList<Appointment> mainList) {
 		for (int i = 0; i < appointmentStringArray.length; i += 10) {
 			addAppointment(mainList, new Appointment(Integer.parseInt(appointmentStringArray[i]),
@@ -25,7 +25,7 @@ public class DatabaseOperationAppointmentList {
 					Integer.parseInt(appointmentStringArray[i + 9])));
 		}
 	}
-
+	///Checks if this appointment already exist to avoid a time clashing/duplicating appointments
 	public static boolean appointmentAlreadyExists(Appointment inputAppointment,
 			ArrayList<Appointment> AppointmentList) {
 		boolean temp = false;
@@ -33,18 +33,18 @@ public class DatabaseOperationAppointmentList {
 			if (inputAppointment.getAppointmentID() == AppointmentList.get(i).getAppointmentID()) {
 				temp = true;
 			}
-			if (inputAppointment.getDate() == AppointmentList.get(i).getDate()
-					&& inputAppointment.getMonth() == AppointmentList.get(i).getMonth()
-					&& inputAppointment.getYear() == AppointmentList.get(i).getYear()
-					&& timeClash(inputAppointment.getTimeBegin(), inputAppointment.getTimeEnd(),
-							AppointmentList.get(i).getTimeBegin(), AppointmentList.get(i).getTimeEnd())) {
+			if (inputAppointment.getDateData() == AppointmentList.get(i).getDateData()
+
+					&& Time.timeClash(inputAppointment.getBeginTime().getTime(),
+							inputAppointment.getEndTime().getTime(), AppointmentList.get(i).getBeginTime().getTime(),
+							AppointmentList.get(i).getEndTime().getTime())) {
 				temp = true;
 			}
 		}
 
 		return temp;
 	}
-
+	///Checks if the Doctor ID that was inputted matches the Appointment index to grant access for further operations
 	public static boolean checkAccessDoctor(int inputAppointment, int userID, ArrayList<Appointment> AppointmentList) {
 		boolean temp = false;
 		for (int i = 0; i < AppointmentList.size(); i++) {
@@ -61,8 +61,8 @@ public class DatabaseOperationAppointmentList {
 
 		return temp;
 	}
-
-	public static boolean checkAccessPatient(int inputAppointment, int userID,ArrayList<Appointment> AppointmentList) {
+	///Checks if the patient ID that was inputted matches the Appointment index to grant access for further operations
+	public static boolean checkAccessPatient(int inputAppointment, int userID, ArrayList<Appointment> AppointmentList) {
 		boolean temp = false;
 		for (int i = 0; i < AppointmentList.size(); i++) {
 			if (inputAppointment == AppointmentList.get(i).getAppointmentID()) {
@@ -78,22 +78,22 @@ public class DatabaseOperationAppointmentList {
 
 		return temp;
 	}
-
-	
-
-	public static Appointment getAppointmentByIndex(int inputIndex,ArrayList<Appointment> AppointmentList) {
+	///Get appointment object from the input index integer
+	public static Appointment getAppointmentByIndex(int inputIndex, ArrayList<Appointment> AppointmentList) {
 		return AppointmentList.get(inputIndex);
 	}
+	///Make amendments to the appoinment(Approved by doctor)
+	public static void changeAppointment(Appointment editedAppointment, int index,
+			ArrayList<Appointment> AppointmentList) {
 
-	public static void changeAppointment(Appointment editedAppointment, int index,ArrayList<Appointment> AppointmentList) {
-		AppointmentList.get(index).setDate(editedAppointment.getDate());
-		AppointmentList.get(index).setMonth(editedAppointment.getMonth());
-		AppointmentList.get(index).setTimeBegin(editedAppointment.getTimeBegin());
-		AppointmentList.get(index).setTimeEnd(editedAppointment.getTimeEnd());
+		AppointmentList.get(index).setBeginTime(editedAppointment.getBeginTime());
+		AppointmentList.get(index).setDateData(editedAppointment.getDateData());
 		AppointmentList.get(index).setEditbyID(editedAppointment.getEditbyID());
-	}
+		AppointmentList.get(index).setEndTime(editedAppointment.getEndTime());
 
-	public static int[] searchByDoctorID(int inputID,ArrayList<Appointment> AppointmentList) {
+	}
+	///Search and get appointment indexes that contains the input doctor ID
+	public static int[] searchByDoctorID(int inputID, ArrayList<Appointment> AppointmentList) {
 		ArrayList<Integer> AppointmentLists = new ArrayList<Integer>();
 		int[] temp = null;
 		for (int i = 0; i < AppointmentList.size(); i++) {
@@ -107,8 +107,8 @@ public class DatabaseOperationAppointmentList {
 		}
 		return temp;
 	}
-
-	public static int searchByAppointmentID(int inputID,ArrayList<Appointment> AppointmentList) {
+	///Get appointment index from the input appointment ID
+	public static int searchByAppointmentID(int inputID, ArrayList<Appointment> AppointmentList) {
 		int temp = -1;
 		for (int i = 0; i < AppointmentList.size(); i++) {
 			if (AppointmentList.get(i).getAppointmentID() == inputID) {
@@ -119,8 +119,8 @@ public class DatabaseOperationAppointmentList {
 
 		return temp;
 	}
-
-	public static int[] searchByPatientID(int inputID,ArrayList<Appointment> AppointmentList) {
+	///Get list of appointments indexes related to the input patient ID
+	public static int[] searchByPatientID(int inputID, ArrayList<Appointment> AppointmentList) {
 		ArrayList<Integer> temporaryList = new ArrayList<Integer>();
 		int tempIntHolder[] = null;
 		for (int i = 0; i < AppointmentList.size(); i++) {
@@ -136,23 +136,27 @@ public class DatabaseOperationAppointmentList {
 
 		return tempIntHolder;
 	}
+	///Prints out the appointment individually
+	public static void printOutAppointment(int appointmentIndex, ArrayList<User> userListData,
+			ArrayList<Appointment> AppointmentList) {
 
-	public static void printOutAppointment(int appointmentIndex, UserList userListData,ArrayList<Appointment> AppointmentList) {
-		double begin = AppointmentList.get(appointmentIndex).getTimeBegin();
-		System.out.println("-----------------------------------------------------");
-		System.out.println("Appointment ID: " + AppointmentList.get(appointmentIndex).getAppointmentID() + "\nMonth:"
-				+ AppointmentList.get(appointmentIndex).getMonthName() + "\nDate: "
-				+ AppointmentList.get(appointmentIndex).date + "\nTime: "
-				+ AppointmentList.get(appointmentIndex).getTimeBegin() + "-"
-				+ AppointmentList.get(appointmentIndex).getTimeEnd() + "\nDoctor incharge:Dr."
-				+ userListData.getUserObject(AppointmentList.get(appointmentIndex).getDoctorID()).getFirstName()
+		Display.print("-----------------------------------------------------");
+		Display.print("Appointment ID: " + AppointmentList.get(appointmentIndex).getAppointmentID() + "\nMonth:"
+				+ AppointmentList.get(appointmentIndex).getDateData().getMonthName() + "\nDate: "
+				+ AppointmentList.get(appointmentIndex).getDateData().getDate() + "\nTime: "
+				+ AppointmentList.get(appointmentIndex).getBeginTime().displayTime() + "-"
+				+ AppointmentList.get(appointmentIndex).getEndTime().displayTime() + "\nDoctor incharge:Dr."
+				+ DatabaseOperationUserList
+						.getUserObject(userListData, AppointmentList.get(appointmentIndex).getDoctorID()).getFirstName()
 				+ "\nPatient:"
-				+ userListData.getUserObject(AppointmentList.get(appointmentIndex).getPatientID()).getFirstName());
-		System.out.println("-----------------------------------------------------");
+				+ DatabaseOperationUserList
+						.getUserObject(userListData, AppointmentList.get(appointmentIndex).getPatientID())
+						.getFirstName());
+		Display.print("-----------------------------------------------------");
 
 	}
-
-	public static void writeToDisk(String location,ArrayList<Appointment> AppointmentList) throws IOException {
+	///Write all the appointments to the file input location
+	public static void writeToDisk(String location, ArrayList<Appointment> AppointmentList) throws IOException {
 		WriteProcess.clearFile(location);
 		for (int i = 0; i < AppointmentList.size(); i++) {
 			if (i == 0) {
@@ -162,25 +166,25 @@ public class DatabaseOperationAppointmentList {
 			}
 		}
 	}
-
+	///Look up appointments in specify time interval
 	public static void lookupAppointmentInterval(int beginDay, int beginMonth, int endDay, int endMonth,
-			UserList userListData,ArrayList<Appointment> AppointmentList) {
+			ArrayList<User> userListData, ArrayList<Appointment> AppointmentList) {
 		if (endDay < beginDay && endMonth > beginMonth || endDay > beginDay && endMonth > beginMonth) {
 
 			for (int i = beginDay; i <= 31; i++) {
 				for (int k = 0; k < AppointmentList.size(); k++) {
-					if (AppointmentList.get(k).getMonth() == beginMonth && AppointmentList.get(k).getDate() == i
-							&& AppointmentList.get(k).approved) {
-						printOutAppointment(k, userListData,AppointmentList);
+					if (AppointmentList.get(k).getDateData().getMonth() == beginMonth
+							&& AppointmentList.get(k).getDateData().getDate() == i && AppointmentList.get(k).approved) {
+						printOutAppointment(k, userListData, AppointmentList);
 					}
 				}
 			}
 
 			for (int i = 1; i <= endDay; i++) {
 				for (int k = 0; k < AppointmentList.size(); k++) {
-					if (AppointmentList.get(k).getMonth() == endMonth && AppointmentList.get(k).getDate() == i
-							&& AppointmentList.get(k).approved) {
-						printOutAppointment(k, userListData,AppointmentList);
+					if (AppointmentList.get(k).getDateData().getMonth() == endMonth
+							&& AppointmentList.get(k).getDateData().getDate() == i && AppointmentList.get(k).approved) {
+						printOutAppointment(k, userListData, AppointmentList);
 					}
 				}
 			}
@@ -188,37 +192,41 @@ public class DatabaseOperationAppointmentList {
 		} else if (endDay >= beginDay && endMonth == beginMonth) {
 			for (int i = beginDay; i <= endDay; i++) {
 				for (int k = 0; k < AppointmentList.size(); k++) {
-					if (AppointmentList.get(k).getMonth() == beginMonth && AppointmentList.get(k).getDate() == i
-							&& AppointmentList.get(k).approved) {
-						printOutAppointment(k, userListData,AppointmentList);
+					if (AppointmentList.get(k).getDateData().getMonth() == beginMonth
+							&& AppointmentList.get(k).getDateData().getDate() == i && AppointmentList.get(k).approved) {
+						printOutAppointment(k, userListData, AppointmentList);
 					}
 				}
 			}
 		}
 
 	}
-
+	///Look up appointment of specific doctor within the input time interval
 	public static void lookupDoctorAppointmentInterval(int beginDay, int beginMonth, int endDay, int endMonth,
-			UserList userListData, int[] doctorList) {
+			ArrayList<User> userListData, int[] doctorList,ArrayList<Appointment> AppointmentList) {
+		
 		ArrayList<Appointment> templist = new ArrayList<Appointment>();
 		for (int i = 0; i < doctorList.length; i++) {
-			templist.add(AppointmentList1.get(doctorList[i]));
+			templist.add(AppointmentList.get(doctorList[i]));
 		}
+		
+		
 
 		if (endDay < beginDay && endMonth > beginMonth || endDay > beginDay && endMonth > beginMonth) {
 
 			for (int i = beginDay; i <= 31; i++) {
 				for (int k = 0; k < templist.size(); k++) {
-					if (templist.get(k).getMonth() == beginMonth && templist.get(k).getDate() == i) {
-						printOutAppointment(k, userListData);
+					if (templist.get(k).getDateData().getMonth() == beginMonth && templist.get(k).getDateData().getDate() == i) {
+						
+						printOutAppointment(k, userListData,AppointmentList);
 					}
 				}
 			}
 
 			for (int i = 1; i <= endDay; i++) {
 				for (int k = 0; k < templist.size(); k++) {
-					if (templist.get(k).getMonth() == endMonth && templist.get(k).getDate() == i) {
-						printOutAppointment(k, userListData);
+					if (templist.get(k).getDateData().getMonth() == endMonth && templist.get(k).getDateData().getDate() == i) {
+						printOutAppointment(k, userListData,AppointmentList);
 					}
 				}
 			}
@@ -226,8 +234,8 @@ public class DatabaseOperationAppointmentList {
 		} else if (endDay >= beginDay && endMonth == beginMonth) {
 			for (int i = beginDay; i <= endDay; i++) {
 				for (int k = 0; k < templist.size(); k++) {
-					if (templist.get(k).getMonth() == beginMonth && templist.get(k).getDate() == i) {
-						printOutAppointment(k, userListData);
+					if (templist.get(k).getDateData().getMonth() == beginMonth && templist.get(k).getDateData().getDate()== i) {
+						printOutAppointment(k, userListData,AppointmentList);
 					}
 				}
 			}

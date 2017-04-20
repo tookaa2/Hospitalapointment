@@ -7,6 +7,9 @@ import AppointmentData.AppointmentList;
 
 public class Main {
 	public static void main(String args[]) throws IOException {
+		int number = 534;
+		    int firstDigit = (Integer.parseInt(Integer.toString(number).substring(0, 2)));
+		    System.out.println(firstDigit);
 		/// DateFormat todayDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		/// Date day = new Date();
 		/// System.out.println(todayDate.format(day));
@@ -25,15 +28,8 @@ public class Main {
 		String[] appointmentList;
 		String[] changeList;
 		UserList mainList = new UserList();
-		userList = ReadProcess.readFile("C:\\Users\\Donut\\Documents\\GitHub\\test1.txt");
-		appointmentList = ReadProcess.readFile("C:\\Users\\Donut\\Documents\\GitHub\\appoint1.txt");
-		changeList = ReadProcess.readFile("C:\\Users\\Donut\\Documents\\GitHub\\change1.txt");
-		AppointmentList appointmentData1 = new AppointmentList();
-		AppointmentList changeData = new AppointmentList();
-		AppointmentList.initializeAppointments(appointmentList, appointmentData1);
-		AppointmentList.initializeAppointments(changeList, changeData);
-		UserAccessOperations.initializeUsers(userList, mainList);
-		Main(mainList, appointmentData1, changeData);
+		 
+		//Main(mainList, appointmentData1, changeData);
 	}
 
 	public static void Main(UserList mainList, AppointmentList appointData, AppointmentList changeData)

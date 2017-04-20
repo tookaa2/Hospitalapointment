@@ -10,7 +10,7 @@ public class Reception extends User implements ILookUpAppointment {
 		super(authority, ID, firstname, lastname, phone, username, password);
 	}
 
-	public void lookUpAppointment(AppointmentList list1, UserList userListData) {
+	public void lookUpAppointment(AppointmentList list1, ArrayList<User> userListData) {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Please input the beginning date:/nDate:(example 31)");
 		int beginday = input.nextInt();
@@ -24,7 +24,7 @@ public class Reception extends User implements ILookUpAppointment {
 		list1.lookupAppointmentInterval(beginday, beginmonth, endday, endmonth, userListData);
 	}
 
-	public void addNewPatient(AppointmentList list1, UserList userListData, String userDatalocation) {
+	public void addNewPatient(AppointmentList list1, ArrayList<User> userListData, String userDatalocation) {
 		Scanner input = new Scanner(System.in);
 		Scanner input2 = new Scanner(System.in);
 		System.out.println("Please input the patient's infos:");
@@ -43,7 +43,7 @@ public class Reception extends User implements ILookUpAppointment {
 		WriteProcess.writeTo(userListData.userlist1.get(userListData.userlist1.size() - 1).getInfoString(),
 				userDatalocation, false);
 	}
-	public void addNewDoctor(AppointmentList list1, UserList userListData, String userDatalocation) {
+	public void addNewDoctor(AppointmentList list1, ArrayList<User> userListData, String userDatalocation) {
 		Scanner input = new Scanner(System.in);
 		Scanner input2 = new Scanner(System.in);
 		System.out.println("Please input the Doctor's infos:");
@@ -62,7 +62,7 @@ public class Reception extends User implements ILookUpAppointment {
 		WriteProcess.writeTo(userListData.userlist1.get(userListData.userlist1.size() - 1).getInfoString(),
 				userDatalocation, false);
 	}
-	public void lookupDoctor(AppointmentList list1, UserList userListData){
+	public void lookupDoctor(AppointmentList list1, ArrayList<User> userListData){
 		Scanner input = new Scanner(System.in);
 		System.out.println("Please input the doctor's ID:");
 		int doctorID=input.nextInt();
@@ -74,7 +74,11 @@ public class Reception extends User implements ILookUpAppointment {
 		int endDay = input.nextInt();
 		System.out.println("Month:(example 7)");
 		int endMonth = input.nextInt();
-		list1.lookupDoctorAppointmentInterval(beginDay, beginMonth, endDay, endMonth, userListData, list1.searchByDoctorID(doctorID));
+		DatabaseOperationAppointmentList.lookupAppointmentInterval(
+				beginDay, beginMonth, endDay, endMonth, userListData, list1.searchByDoctorID(doctorID));
+		
+		list1.lookupDoctorAppointmentInterval(
+				beginDay, beginMonth, endDay, endMonth, userListData, list1.searchByDoctorID(doctorID));
 		
 	}
 	

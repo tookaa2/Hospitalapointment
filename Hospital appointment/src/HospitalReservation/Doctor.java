@@ -6,6 +6,8 @@ import AppointmentData.Appointment;
 import java.io.IOException;
 import java.util.*;
 
+import Module.Input;
+
 public class Doctor extends User implements ILookUpAppointment {
 	protected static int counterD = 0;
 
@@ -37,6 +39,7 @@ public class Doctor extends User implements ILookUpAppointment {
 						&& list1.getAppointmentByIndex(appointmentOfDoctor[i]).getMonth() == month
 						&& list1.getAppointmentByIndex(appointmentOfDoctor[i]).getYear() == year) {
 					list1.printOutAppointment(appointmentOfDoctor[i], userListData);
+					DatabaseOperationAppointmentList.printOutAppointment(appointmentOfDoctor[i], userListData, list1);
 				}
 			}
 			today.add(Calendar.DATE, 1);
@@ -138,6 +141,7 @@ public class Doctor extends User implements ILookUpAppointment {
 	public void addNewAppointment(AppointmentList list1, ArrayList<User> userListData, String appointmentLocation)
 			throws IOException {
 		Scanner input = new Scanner(System.in);
+		
 		System.out.println("Please enter the appointment date(eg 08): ");
 		int appointmentDate = input.nextInt();
 		System.out.println("Please enter the appointment month(eg 7): ");
@@ -152,7 +156,8 @@ public class Doctor extends User implements ILookUpAppointment {
 		int appointmentPatientID = input.nextInt();
 		Appointment tempAppointment = new Appointment(appointmentDate, appointmentMonth, appointmentYear,
 				appointmentBeginTime, appointmentEndTime, this.getID(), appointmentPatientID, this.getID(), 1);
-		if (userListData.verifyExist(appointmentPatientID, "P")) {
+		if (DatabaseOperationUserList.verifyExist(userListData, appointmentPatientID, "P")) {
+			
 			System.out.println("Patient exist");
 			if (list1.appointmentAlreadyExists(tempAppointment)) {
 				System.out.println("Appointment time overlaps/already exist");

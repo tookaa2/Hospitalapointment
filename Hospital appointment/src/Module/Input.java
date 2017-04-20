@@ -43,18 +43,18 @@ public class Input {
 		return tempNum;
 	}
 	
-	public String getChar(String askMessage,String ErrorMessage){
+	public char getChar(String askMessage,String ErrorMessage){
 		boolean looper = true;
 		char tempNum = 'x';
 
 		try {
 			Display.print(askMessage);
-			tempNum = scan.nextLine();
+			tempNum = scan.next().charAt(0);
 		}
 
 		catch (java.util.InputMismatchException e) {
 			Display.print(ErrorMessage);
-			tempNum = getString(askMessage, ErrorMessage);
+			tempNum = getChar(askMessage, ErrorMessage);
 		}
 
 		return tempNum;

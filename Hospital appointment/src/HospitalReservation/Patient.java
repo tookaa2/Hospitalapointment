@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import AppointmentData.Appointment;
-import AppointmentData.AppointmentList;
+import Module.*;
 
 public class Patient extends User implements ILookUpAppointment {
 	protected static int counter = 0;
@@ -24,22 +23,24 @@ public class Patient extends User implements ILookUpAppointment {
 
 	}
 
-	public void lookUpAppointment(AppointmentList list1, ArrayList<User> userListData) {
+	public void lookUpAppointment(ArrayList<Appointment> list1, ArrayList<User> userListData) {
 		Scanner input = new Scanner(System.in);
-		System.out.println("Your appointment:");
-		int[] appointmentOfPatient = list1.searchByPatientID(this.getID());
+		Display.print("Your appointment:");
+		int[] appointmentOfPatient = DatabaseOperationAppointmentList.searchByPatientID(this.getID(), list1);
 		for (int i = 0; i < appointmentOfPatient.length; i++) {
-			list1.printOutAppointment(appointmentOfPatient[i], userListData);
-
+			DatabaseOperationAppointmentList.printOutAppointment(i, userListData, list1);
 		}
 
 	}
 
-	public void requestAppointmentChange(AppointmentList list1, ArrayList<User> userListData, AppointmentList changeList1,
+	public void requestAppointmentChange(ArrayList<Appointment> list1, ArrayList<User> userListData, ArrayList<Appointment> changeList1,
 			String changeListLocation) throws IOException {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Please specify the appointment ID:");
 		int appointmentID = input.nextInt();
+		
+		Input.get
+		
 		if (list1.checkAccessPatient(appointmentID, this.getID())) {
 
 			System.out.println("Access Granted!");
