@@ -10,7 +10,6 @@ public class User implements ILookUpAppointment{
 	protected long phoneNumber;
 	protected final String firstName;
 	protected final String lastName;
-
 	public User(String authority,int ID,String firstname,String lastname,long phone,String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -19,7 +18,9 @@ public class User implements ILookUpAppointment{
 		this.lastName=lastname;
 		this.phoneNumber=phone;
 		this.ID=ID;
+
 	}
+	
 	
 	public void lookUpAppointment(AppointmentList list1,UserList userListData){
 		System.out.println("User cannot lookup");
@@ -61,6 +62,9 @@ public class User implements ILookUpAppointment{
 			temp="Patient ";
 		}
 		return temp;
+	}
+	public String getInfoString(){
+		return this.authority+","+this.ID+","+this.firstName+","+this.lastName+","+this.phoneNumber+","+this.username+","+this.password;
 	}
 
 }

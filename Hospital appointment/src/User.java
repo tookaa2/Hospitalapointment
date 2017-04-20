@@ -1,5 +1,6 @@
 
 public class User {
+
 	protected final String username;
 	protected String password;
 	protected String authority;
@@ -7,6 +8,8 @@ public class User {
 	protected long phoneNumber;
 	protected final String firstName;
 	protected final String lastName;
+
+
 
 	public User(String authority,int ID,String firstname,String lastname,long phone,String username, String password) {
 		this.username = username;
@@ -26,6 +29,7 @@ public class User {
 		return password;
 	}
 
+
 	public int getID() {
 		return ID;
 	}
@@ -33,6 +37,8 @@ public class User {
 	public String getAuthority() {
 		return authority;
 	}
+
+
 	public long getPhoneNumber() {
 		return phoneNumber;
 	}

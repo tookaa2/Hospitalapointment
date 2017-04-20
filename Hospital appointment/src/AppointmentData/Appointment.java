@@ -62,6 +62,26 @@ public class Appointment {
 		IDcounter++;
 	}
 
+	public void setDoctorID(int doctorID) {
+		this.doctorID = doctorID;
+	}
+
+	public void setPatientID(int patientID) {
+		this.patientID = patientID;
+	}
+
+	public void setEditbyID(int editbyID) {
+		this.editbyID = editbyID;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
+	public static void setIDcounter(int iDcounter) {
+		IDcounter = iDcounter;
+	}
+
 	public int getDate() {
 		return date;
 	}
@@ -82,7 +102,7 @@ public class Appointment {
 		return editbyID;
 	}
 
-	public boolean isApproved() {
+	public boolean getApproved() {
 		return approved;
 	}
 
@@ -92,6 +112,53 @@ public class Appointment {
 
 	public int getMonth() {
 		return month;
+	}
+
+	public String getMonthName() {
+		String monthString = "";
+		switch (this.getMonth()) {
+		case 1:
+			monthString = "January";
+			break;
+		case 2:
+			monthString = "February";
+			break;
+		case 3:
+			monthString = "March";
+			break;
+		case 4:
+			monthString = "April";
+			break;
+		case 5:
+			monthString = "May";
+			break;
+		case 6:
+			monthString = "June";
+			break;
+		case 7:
+			monthString = "July";
+			break;
+		case 8:
+			monthString = "August";
+			break;
+		case 9:
+			monthString = "September";
+			break;
+		case 10:
+			monthString = "October";
+			break;
+		case 11:
+			monthString = "November";
+			break;
+		case 12:
+			monthString = "December";
+			break;
+		default:
+			monthString = "Invalid month";
+			break;
+		}
+		return monthString;
+
 	}
 
 	public void setMonth(int month) {
@@ -128,6 +195,26 @@ public class Appointment {
 
 	public void setAppointmentID(int appointmentID) {
 		AppointmentID = appointmentID;
+	}
+
+	public String appointmentToString() {
+		int temp = 0;
+		if (this.getApproved()) {
+			temp = 1;
+		}
+		String timeBegin=""+this.getTimeBegin();
+		if(this.getTimeBegin()<1000){
+			timeBegin="0"+this.getTimeBegin();
+		}
+		
+		String timeEnd=""+this.getTimeEnd();
+		if(this.getTimeBegin()<1000){
+			timeEnd="0"+this.getTimeEnd();
+		}
+		
+		return this.getAppointmentID() + "," + this.getDate() + "," + this.getMonth() + "," + this.getYear() + ","
+				+ timeBegin + "," + this.getTimeEnd() + "," + this.getDoctorID() + "," + this.getPatientID()
+				+ "," + this.getEditbyID() + "," + temp;
 	}
 
 }
