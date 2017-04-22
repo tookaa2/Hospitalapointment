@@ -1,26 +1,25 @@
-
+import java.lang.*;
 public class UserAccessOperations {
 	public static void initializeUsers(String[] userList, UserList mainList) {
-		for (int i = 0; i < userList.length; i += 3) {
-			mainList.addUser(new User(Integer.parseInt(userList[i]), userList[i + 1], userList[i + 2]));
+		for (int i = 0; i < userList.length; i += 7) {
+			mainList.addUser(new User(userList[i], Integer.parseInt(userList[i + 1]), userList[i + 2],userList[i+3],Long.parseLong(userList[i+4]),userList[i+5],userList[i+6]));
 		}
+		
 
 	}
 
 	public static boolean verifyUsername(String[] dataBase, String input) {
 		boolean temp = false;
-		for (int i = 2; i < dataBase.length; i += +3) {
+		for (int i = 5; i < dataBase.length; i += +7) {
 			if (input.equals(dataBase[i])) {
 				temp = true;
 			}
 		}
 		return temp;
 	}
+	
 
-	public static String registerData(String userName, String password, String firstName, String lastName) {
-		String temp = firstName + "," + lastName + "," + userName + "," + password;
-		return temp;
-	}
+
 
 	public static boolean passwordVerify(String[] dataBase, String userName, String password) {
 		int locale = 0;

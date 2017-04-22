@@ -4,9 +4,9 @@ import java.io.IOException;
 
 public class ReadProcess {
 
-	public static String[] readFile() {
+	public static String[] readFile(String location) {
 		// The path of the file to open.
-		String fileName = "C:\\Users\\Donut\\Documents\\GitHub\\test1.txt";
+		String fileName = location;
 		String temp = "";
 		String finalString = "";
 		int setEnd = 0;
